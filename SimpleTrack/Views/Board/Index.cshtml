@@ -1,0 +1,81 @@
+﻿@using YouTrackSharp.Issues
+@model SimpleTrack.Models.IssueGroups
+
+@{
+    ViewBag.Title = "title";
+
+}
+
+<h2>Board</h2>
+
+<div>This is some text</div>
+<div id="backlog">
+    <h3>Backlog</h3>
+    @foreach (Issue issue in Model.Backlog)
+    {
+        <div class="task" data-id="@issue.Id">
+            <div class="taskId">[@issue.Id]</div>
+            <div class="taskSummary">@issue.Summary</div>
+            <div class="taskUser">@issue.AssigneeName </div>
+        </div>
+    }
+    
+</div>
+
+<div id="inProgress">
+    <h3>In Progress</h3>
+    @foreach (Issue issue in Model.InProgress)
+    {
+        <div class="task" data-id="@issue.Id">
+            <div class="taskId">[@issue.Id]</div>
+            <div class="taskSummary">@issue.Summary</div>
+            <div class="taskUser">@issue.ReporterName</div>
+        </div>
+    }
+</div>
+<div id="completed"><h3>Completed</h3>
+    @foreach (Issue issue in Model.InProgress)
+    {
+        <div class="task" data-id="@issue.Id">
+            <div class="taskId">[@issue.Id]</div>
+            <div class="taskSummary">@issue.Summary</div>
+            <div class="taskUser">@issue.ReporterName</div>
+        </div>
+    }
+</div>
+
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(init);
+
+        function handleDrop(event, ui) {
+            ui.draggable.draggable('option', 'revert', false);
+
+            $.get('/board/update?id=' + ui.draggable.attr('data-id') + '&status=In%20Progress');
+        }
+
+        function init() {
+
+            $(".task").draggable({
+                containment: '#content',
+                stack: '#backlog div',
+                cursor: 'move',
+                revert: true
+            });
+
+            $("#inProgress").droppable({
+                hoverClass: 'hovered',
+                drop: handleDrop
+            });
+
+
+            $("#inProgress").attr("style", "height:" + $("#backlog").height() + "px");
+            $("#completed").attr("style", "height:" + $("#backlog").height() + "px");
+        }
+        
+
+    </script>
+
+}

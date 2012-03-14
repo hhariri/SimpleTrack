@@ -1,0 +1,53 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Monthly </h2>
+<p>Warning: It's gonna take long...</p>
+<p>Examples of expression (last part must end with date): "project: resharper #fixed resolved date:"</p>
+
+@using (Html.BeginForm("MonthlyStats", "Report"))
+{
+    <p>@Html.Label("year", "Select Year")
+    
+        @Html.DropDownList("year", new List<SelectListItem>
+                                     {
+                                         new SelectListItem {Selected = true, Text = "2011", Value = "2011"},
+                                         new SelectListItem {Selected = true, Text = "2012", Value = "2012"}
+                                     })
+    </p>
+
+    <p>@Html.Label("months", "Select months [1..12]")
+            
+        @Html.TextBox("months")  
+    </p>
+    <p>
+        @Html.Label("filterName1","Filter Name")
+        
+        @Html.TextBox("filterName1")
+        @Html.Label("filterExpression1", "Filter Expression")
+            
+        @Html.TextBox("filterExpression1")  
+    </p>
+    <p>
+        
+                @Html.Label("filterName2","Filter Name")
+        
+        @Html.TextBox("filterName2")
+
+        @Html.Label("filterExpression2", "Filter Expression")
+            
+        @Html.TextBox("filterExpression2")  
+    </p>
+    <p>
+                @Html.Label("filterName3","Filter Name")
+        
+        @Html.TextBox("filterName3")
+
+        @Html.Label("filterExpression3", "Filter Expression")
+            
+        @Html.TextBox("filterExpression3")  
+    </p>
+    <p>   <input type="submit" value="Generate Report"/>  
+    </p>
+}
